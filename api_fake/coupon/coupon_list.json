@@ -1,0 +1,40 @@
+{
+  "version": 12,
+  "coupons": [
+    {
+      "id": "as2fcv",
+      "title": "Vegetable ECO Biscuit",
+      "image_url": "https://www.goodhousekeeping.com/health/diet-nutrition/g26975180/food-for-hair-growth/",
+      "time_to_expire": "3 days to finish",
+      "is_activated": false
+    },
+    {
+      "id": "des3gt",
+      "title": "Activia 0%",
+      "image_url": "https://www.goodhousekeeping.com/health/diet-nutrition/g26975180/food-for-hair-growth/",
+      "time_to_expire": "3 days to finish",
+      "is_activated": false
+    },
+    {
+      "id": "sxert5",
+      "title": "La Piara",
+      "image_url": "https://sgfm.elcorteingles.es/SGFM/dctm/MEDIA03/201707/05/00118002400242____1__600x600.jpg",
+      "time_to_expire": "3 days to finish",
+      "is_activated": false
+    },
+    {
+      "id": "abrfed",
+      "title": "MAXI hamburguer bread",
+      "image_url": "https://www.goodhousekeeping.com/health/diet-nutrition/g26975180/food-for-hair-growth/",
+      "time_to_expire": "20 days to finish",
+      "is_activated": false
+    },
+    {
+      "id": "sdfsdf",
+      "title": "Digestive chocolate",
+      "image_url": "https://sc02.alicdn.com/kf/UTB8xPD8M5aMiuJk43PTq6ySmXXas/49039/UTB8xPD8M5aMiuJk43PTq6ySmXXas.jpg",
+      "time_to_expire": "1 days to finish",
+      "is_activated": false
+    }
+  ]
+}
