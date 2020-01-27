@@ -56,6 +56,7 @@ class CouponListViewModel : ViewModel() {
 
     fun modelToUnitView(value: Coupon, isPlaceholder:Boolean): CouponView {
         return CouponView.Builder()
+            .setType(value.type)
             .setTitle(if(isPlaceholder)titlePlaceholder() else value.title)
             .setTitleBackground(if(isPlaceholder)view.getBackgroundPlaceholder()else null)
             .setTitleColor(if(isPlaceholder)view.getPlaceholderTextColor() else view.getDefaultTextColor())

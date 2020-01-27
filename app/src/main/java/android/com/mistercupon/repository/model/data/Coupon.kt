@@ -35,6 +35,18 @@ class Coupon (
     @field:ColumnInfo(name = "is_activated")
     var isActivated:Boolean = false
 
+    var type:String = COUPON_TYPE
+
+    companion object{
+        const val COUPON_TYPE = "coupon"
+        const val HEADER_TYPE = "header"
+    }
+
+    constructor(id:String,type:String):this(id){
+        this.id = id
+        this.type = type
+    }
+
     override fun getDatabase(): Database {
         return Repository.instance.database
     }

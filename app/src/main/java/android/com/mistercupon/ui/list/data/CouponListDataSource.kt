@@ -11,10 +11,10 @@ class CouponListDataSource: PositionalDataSource<Coupon>() {
 
     override fun loadInitial(params: LoadInitialParams, callback: LoadInitialCallback<Coupon>) {
         val items = getListOfPlaceholders()
-        callback.onResult(items,0,4)
+        callback.onResult(items,0,5)
     }
 
     fun getListOfPlaceholders():List<Coupon>{
-        return listOf(Coupon("a"),Coupon("b"), Coupon("c"), Coupon("d"))
+        return listOf(Coupon("vv", Coupon.HEADER_TYPE),Coupon("a"),Coupon("b"), Coupon("c"), Coupon("d"))
     }
 }

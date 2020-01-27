@@ -34,9 +34,19 @@
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
                 app:expandedTitleMarginEnd="56dp"
-                app:expandedTitleMarginStart="40dp"
+                app:expandedTitleMarginStart="20dp"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                app:title="Your Coupons">
+                app:title="Tus cupones"
+                >
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:padding="20dp"
+                    android:text="0 coupons activated"
+                    android:textSize="16sp" />
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
@@ -47,17 +57,4 @@
         </com.google.android.material.appbar.AppBarLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:textColor="@color/colorPrimary"
-        android:text="TIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-        android:textSize="24sp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

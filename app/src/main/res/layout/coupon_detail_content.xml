@@ -12,10 +12,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/holo_orange_light"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         app:layout_constraintBottom_toTopOf="@+id/activated_container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="spread_inside">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/discount_number_container"
@@ -31,7 +34,8 @@
                 android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView"
+                android:text="-100%"
+                android:textAlignment="center"
                 android:textSize="30sp"
                 android:textStyle="bold|italic"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -50,10 +54,12 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/discount_text_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="DISCOUNT"
+                android:textSize="30sp"
+                android:textStyle="bold|italic"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -66,7 +72,10 @@
         android:id="@+id/activated_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
         android:background="@drawable/border_bottom"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         app:layout_constraintBottom_toTopOf="@+id/description_container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -76,12 +85,38 @@
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ACTIVATED_CONTAINER"
+            android:text="Activated"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/isActivated_button_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/text_container"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ToggleButton
+                android:id="@+id/isActivated_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/toggle_selector_activate"
+                android:text="ToggleButton"
+                android:textOff="Activate"
+                android:textOn="Activated"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -89,6 +124,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/border_bottom"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         app:layout_constraintBottom_toTopOf="@+id/timeToxpire_container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -98,10 +135,15 @@
             android:id="@+id/brand_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="4dp"
             android:text="BRAND"
+            android:textAlignment="textStart"
+            android:textColor="@color/design_default_color_primary"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/product_text"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -109,10 +151,14 @@
             android:id="@+id/product_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TITLE_PRODUCT"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:text="MY VEGGIE ECOLOGIC BREAD X3"
+            android:textSize="24sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/description_text"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/brand_text" />
 
@@ -120,10 +166,12 @@
             android:id="@+id/description_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="16dp"
             android:text="@android:string/fingerprint_icon_content_description"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/product_text" />
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -133,21 +181,34 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/border_bottom"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         app:layout_constraintBottom_toTopOf="@+id/limitation_container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/description_container">
 
         <TextView
-            android:id="@+id/textView8"
+            android:id="@+id/timeToExpire_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:text="TIME TO EXPIRE"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.1"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="1dp"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/timeToExpire_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/ic_menu_my_calendar" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -155,32 +216,40 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/border_bottom"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         app:layout_constraintBottom_toTopOf="@+id/productCode_container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/timeToxpire_container">
 
         <TextView
-            android:id="@+id/textView9"
+            android:id="@+id/limitation_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="4dp"
+            android:text="Limited to 20 units"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/limitation_text"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView10"
+            android:id="@+id/limitation_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
-            app:layout_constraintBottom_toTopOf="@+id/textView9"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="16dp"
+            android:text="Coupon redeemable 1 time"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/limitation_title" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -188,31 +257,41 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/border_bottom"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         app:layout_constraintBottom_toTopOf="@+id/contiditions_container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/limitation_container">
 
         <TextView
-            android:id="@+id/textView11"
+            android:id="@+id/product_code_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="4dp"
+            android:text="Product Code"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/product_code"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView13"
+            android:id="@+id/product_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="16dp"
+            android:text="123456"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/product_code_title"
+            tools:text="123456" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -220,22 +299,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/border_bottom"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/productCode_container">
 
         <TextView
-            android:id="@+id/textView12"
+            android:id="@+id/conditions_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/border_bottom"
-            android:text="Conditions"
+            android:text="Conditions and availability"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.12"
+            app:layout_constraintEnd_toStartOf="@+id/image_conditions"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/image_conditions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/conditions_text"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/star_big_off" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

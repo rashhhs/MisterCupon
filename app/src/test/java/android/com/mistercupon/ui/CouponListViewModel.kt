@@ -19,12 +19,17 @@ class CouponListViewModel {
     }
 
     /*
-        Check that the first time the user enters on the coupon list screen the model return the placeholders.
-        And the following states the model always returns the real list of content
+        Check that the first time the user enters on the coupon list, the screen's model returns the placeholders.
+        After 1 seconds more or less returns the real content
      */
     fun couponListStates(){
 
     }
 
-    //Should be necessary to check if viewContract on viewModel is null what happens
+    /*
+        If the users activates the coupon should be send to the model in order to populate the order to the API service
+     */
+    fun activateCoupon(){
+
+    }
 }
