@@ -3,15 +3,16 @@ package android.com.mistercupon.ui.detail
 import android.com.mistercupon.BaseFragment
 import android.com.mistercupon.MainActivity
 import android.com.mistercupon.R
+import android.com.mistercupon.ui.list.data.CouponView
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.appcompat.app.AppCompatActivity
+import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProviders
-import java.nio.InvalidMarkException
 
 class CouponDetailFragment:BaseFragment() {
     companion object {
@@ -20,16 +21,31 @@ class CouponDetailFragment:BaseFragment() {
 
     private lateinit var viewModel:CouponDetailViewModel
 
+    private lateinit var mDiscountText:TextView
+    private lateinit var mBrandTextView: TextView
+    private lateinit var mProductTextView: TextView
+    private lateinit var mDescriptionTextView: TextView
+    private lateinit var mTimeToExpireTextView:TextView
+    private lateinit var mLimitedUnitTextView: TextView
+    private lateinit var mProductCodeTextView:TextView
     private lateinit var mBackButton: ImageView
-    private lateinit var mConditionsImageView: ImageView
+    private lateinit var mConditionsContainer: ConstraintLayout
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         val view = inflater.inflate(R.layout.coupon_detail_layout, container, false)
+        mDiscountText = view.findViewById(R.id.discount_text)
+        mBrandTextView = view.findViewById(R.id.brand_text)
+        mProductTextView = view.findViewById(R.id.product_text)
+        mProductTextView = view.findViewById(R.id.product_text)
+        mDescriptionTextView = view.findViewById(R.id.description_text)
+        mTimeToExpireTextView = view.findViewById(R.id.timeToExpire_text)
+        mLimitedUnitTextView = view.findViewById(R.id.limitation_title)
+        mProductCodeTextView = view.findViewById(R.id.product_code)
         mBackButton = view.findViewById(R.id.back_button)
-        mConditionsImageView = view.findViewById(R.id.image_conditions)
+        mConditionsContainer = view.findViewById(R.id.contiditions_container)
         return view
     }
 
@@ -37,6 +53,22 @@ class CouponDetailFragment:BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         //TODO (R): Seems with the newest version ViewModelProviders is deprecated. Search the newest approach on the future
         viewModel = ViewModelProviders.of(this).get(CouponDetailViewModel::class.java)
+        setContent()
+    }
+
+    fun setContent(){
+        val couponView = arguments?.getSerializable("coupon")
+
+        if(couponView is CouponView){
+            mDiscountText.text = couponView.discount
+            mBrandTextView.text = couponView.brand
+            mProductTextView.text = couponView.title
+            mDescriptionTextView.text = couponView.productDescription
+            mTimeToExpireTextView.text = couponView.daysToExpire
+            mLimitedUnitTextView.text = couponView.limitationUnits
+            mProductCodeTextView.text = couponView.productCode
+        }
+
         initBackButton()
         initImageConditions()
     }
@@ -48,7 +80,7 @@ class CouponDetailFragment:BaseFragment() {
     }
 
     fun initImageConditions(){
-        mConditionsImageView.setOnClickListener{v: View? ->
+        mConditionsContainer.setOnClickListener{v: View? ->
             val context: Context? = activity
             if(context is MainActivity)
                 context.addFragment(R.id.container,ConditionsFragment.newInstance())

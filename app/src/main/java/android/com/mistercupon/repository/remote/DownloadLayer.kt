@@ -1,4 +1,6 @@
 package android.com.mistercupon.repository.remote
 
-interface DownloadLayer {
+interface DownloadLayer<T> {
+    fun download()
+    fun store(values:List<T>)
 }

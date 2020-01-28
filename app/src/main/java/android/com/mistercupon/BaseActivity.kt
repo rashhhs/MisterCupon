@@ -1,6 +1,7 @@
 package android.com.mistercupon
 
 import android.annotation.SuppressLint
+import android.com.mistercupon.repository.Repository
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -38,4 +39,10 @@ open class BaseActivity: AppCompatActivity()  {
         supportActionBar?.setHomeButtonEnabled(isEnabled)
         supportActionBar?.setDisplayHomeAsUpEnabled(isEnabled)
     }
+
+    override fun onPause() {
+        Repository.databaseCompositeDisposable.dispose()
+        super.onPause()
+    }
+
 }

@@ -57,6 +57,7 @@ class CouponListViewModel : ViewModel() {
     fun modelToUnitView(value: Coupon, isPlaceholder:Boolean): CouponView {
         return CouponView.Builder()
             .setType(value.type)
+            .setBrand(value.brand)
             .setTitle(if(isPlaceholder)titlePlaceholder() else value.title)
             .setTitleBackground(if(isPlaceholder)view.getBackgroundPlaceholder()else null)
             .setTitleColor(if(isPlaceholder)view.getPlaceholderTextColor() else view.getDefaultTextColor())
@@ -65,6 +66,11 @@ class CouponListViewModel : ViewModel() {
             .setDaysToExpireColor(if(isPlaceholder)view.getPlaceholderTextColor() else view.getDefaultTextColor())
             .setImgUrl(value.img_url)
             .setIsActivated(value.isActivated)
+            .setDiscount(value.discount)
+            .setLimitationUnits(value.limitationUnits)
+            .setCouponTimes(value.couponTimes)
+            .setProductDescription(value.productDescription)
+            .setProductCode(value.productCode)
             .build()
     }
 

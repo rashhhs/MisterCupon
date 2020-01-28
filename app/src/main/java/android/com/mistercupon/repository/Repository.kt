@@ -1,16 +1,17 @@
 package android.com.mistercupon.repository
 
 import android.com.mistercupon.repository.model.database.Database
+import android.com.mistercupon.repository.remote.DownloadService
 import android.content.Context
 import io.reactivex.disposables.CompositeDisposable
 
 class Repository {
     lateinit var database: Database
-    //lateinit var downloadService: DownloadService
+    lateinit var downloadService: DownloadService
 
     fun init(context: Context){
         initDatabase(context)
-        //initDownloadService()
+        initDownloadService()
     }
 
     private fun initDatabase(context: Context){
@@ -18,10 +19,10 @@ class Repository {
         database.init(context)
     }
 
-    /*private fun initDownloadService(){
+    private fun initDownloadService(){
         downloadService = DownloadService.instance
-        downloadService.donwloadVersions()
-    }*/
+        downloadService.downloadContent()
+    }
 
     companion object{
         val instance = Repository()

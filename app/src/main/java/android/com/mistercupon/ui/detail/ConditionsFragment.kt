@@ -30,8 +30,6 @@ class ConditionsFragment: BaseFragment() {
     }
 
     fun initBackButton(){
-        mBackButton.setOnClickListener{v: View? ->
-            activity?.onBackPressed()
-        }
+        mBackButton.setOnClickListener{activity?.onBackPressed()}
     }
 }

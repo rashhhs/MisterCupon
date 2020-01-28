@@ -34,6 +34,24 @@ class Coupon (
     @SerializedName("is_activated")
     @field:ColumnInfo(name = "is_activated")
     var isActivated:Boolean = false
+    @SerializedName("discount")
+    @field:ColumnInfo(name = "discount")
+    var discount:String = ""
+    @SerializedName("brand")
+    @field:ColumnInfo(name = "brand")
+    var brand:String = ""
+    @SerializedName("product_description")
+    @field:ColumnInfo(name="product_description")
+    var productDescription:String = ""
+    @SerializedName("limitation units")
+    @field:ColumnInfo(name="limitation_units")
+    var limitationUnits:String = ""
+    @SerializedName("coupon_times")
+    @field:ColumnInfo(name = "coupon_times")
+    var couponTimes:String = ""
+    @SerializedName("product_code")
+    @field:ColumnInfo(name = "product_code")
+    var productCode:String =""
 
     var type:String = COUPON_TYPE
 
@@ -47,6 +65,22 @@ class Coupon (
         this.type = type
     }
 
+    constructor(id:String,type:String,title:String,url:String,timeToExpire:String,isActivated:Boolean,
+                discount:String,brand:String,des:String,limit:String,times:String,code:String):this(id){
+        this.id = id
+        this.type = type
+        this.img_url = url
+        this.title = title
+        this.timeToExpire = timeToExpire
+        this.isActivated = isActivated
+        this.discount = discount
+        this.brand = brand
+        this.productDescription = des
+        this.limitationUnits = limit
+        this.couponTimes = times
+        this.productCode = code
+    }
+
     override fun getDatabase(): Database {
         return Repository.instance.database
     }
@@ -58,9 +92,9 @@ class Coupon (
     }
 
     override fun get(): DataSource.Factory<Int,Coupon> {
-       // return getDatabase().couponDao.getCoupons().mapByPage { input -> input.map { modelToUnitView(it) } }.toLiveData(pageSize = 50)
-        val source = CouponListDataSourceFactory()
-        return source
+       return getDatabase().couponDao.getCoupons()
+        //val source = CouponListDataSourceFactory()
+       // return source
     }
 
     override fun getPlaceholders(): DataSource.Factory<Int,Coupon>{

@@ -6,6 +6,7 @@ import android.com.mistercupon.repository.model.data.Coupon
 import android.com.mistercupon.ui.detail.CouponDetailFragment
 import android.com.mistercupon.ui.list.data.CouponView
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -62,8 +63,14 @@ class CouponListAdapter(val context: Context?): PagedListAdapter<CouponView,Coup
         }
 
         override fun onClick(v: View?) {
-            if(context is MainActivity)
-                context.addFragment(R.id.container,CouponDetailFragment.newInstance())
+            if(context is MainActivity){
+                val fragment = CouponDetailFragment.newInstance()
+                val bundle = Bundle()
+                bundle.putSerializable("coupon",getItem(adapterPosition))
+                fragment.arguments = bundle
+                context.addFragment(R.id.container,fragment)
+            }
+
         }
     }
 
