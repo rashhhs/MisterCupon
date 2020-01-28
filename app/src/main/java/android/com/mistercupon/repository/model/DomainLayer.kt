@@ -1,9 +1,7 @@
 package android.com.mistercupon.repository.model
 
-import android.com.mistercupon.repository.model.database.Database
-import androidx.lifecycle.LiveData
+import android.com.mistercupon.repository.database.Database
 import androidx.paging.DataSource
-import androidx.paging.PagedList
 
 interface DomainLayer<T,Z> {
     fun getDatabase():Database

@@ -2,13 +2,12 @@ package android.com.mistercupon.repository.model.data
 
 import android.com.mistercupon.repository.Repository
 import android.com.mistercupon.repository.model.DomainLayer
-import android.com.mistercupon.repository.model.database.Database
+import android.com.mistercupon.repository.database.Database
 import android.com.mistercupon.ui.list.data.CouponListDataSourceFactory
 import android.com.mistercupon.ui.list.data.CouponView
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
-import androidx.paging.PagedList
-import androidx.paging.toLiveData
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -86,19 +85,36 @@ class Coupon (
     }
 
     override fun insert(values: List<Coupon>) {
-        getDatabase().couponDao.insertCoupon(values)
-            .subscribeOn(Schedulers.io())
-            .subscribe()
+        Repository.databaseCompositeDisposable.add(getDatabase()
+            .couponDao.insertCoupon(values)
+            .subscribe({  }, { t: Throwable ->   }))
     }
 
     override fun get(): DataSource.Factory<Int,Coupon> {
        return getDatabase().couponDao.getCoupons()
-        //val source = CouponListDataSourceFactory()
-       // return source
     }
 
     override fun getPlaceholders(): DataSource.Factory<Int,Coupon>{
         val source = CouponListDataSourceFactory()
         return source
+    }
+
+    fun updateCouponActivation(title:String, isActivated: Boolean){
+        updateDatabaseActivation(title,isActivated)
+        updateDownloadServiceActivation(isActivated)
+    }
+
+    fun updateDatabaseActivation(title:String, isActivated: Boolean){
+        getDatabase().couponDao.updateCouponActivation(title, isActivated)
+            .subscribeOn(Schedulers.io())
+            .subscribe()
+    }
+
+    fun updateDownloadServiceActivation(isActivated: Boolean){
+        //(R): CALL TO DOWNLOAD SERVICE. FOR NOW, IS FAKE!!
+    }
+
+    fun getActiveCoupons(): LiveData<Int> {
+        return getDatabase().couponDao.getActivateCoupons()
     }
 }

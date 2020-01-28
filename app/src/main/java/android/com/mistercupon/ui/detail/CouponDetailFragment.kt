@@ -3,7 +3,9 @@ package android.com.mistercupon.ui.detail
 import android.com.mistercupon.BaseFragment
 import android.com.mistercupon.MainActivity
 import android.com.mistercupon.R
+import android.com.mistercupon.repository.model.data.Coupon
 import android.com.mistercupon.ui.list.data.CouponView
+import android.com.mistercupon.ui.utils.ImageUtils
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.ToggleButton
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProviders
 
@@ -28,8 +31,10 @@ class CouponDetailFragment:BaseFragment() {
     private lateinit var mTimeToExpireTextView:TextView
     private lateinit var mLimitedUnitTextView: TextView
     private lateinit var mProductCodeTextView:TextView
+    private lateinit var toolbarImage:ImageView
     private lateinit var mBackButton: ImageView
     private lateinit var mConditionsContainer: ConstraintLayout
+    private lateinit var activatedButton: ToggleButton
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,7 +50,9 @@ class CouponDetailFragment:BaseFragment() {
         mLimitedUnitTextView = view.findViewById(R.id.limitation_title)
         mProductCodeTextView = view.findViewById(R.id.product_code)
         mBackButton = view.findViewById(R.id.back_button)
+        toolbarImage = view.findViewById(R.id.toolbarImage)
         mConditionsContainer = view.findViewById(R.id.contiditions_container)
+        activatedButton = view.findViewById(R.id.isActivated_button)
         return view
     }
 
@@ -67,6 +74,10 @@ class CouponDetailFragment:BaseFragment() {
             mTimeToExpireTextView.text = couponView.daysToExpire
             mLimitedUnitTextView.text = couponView.limitationUnits
             mProductCodeTextView.text = couponView.productCode
+            if(couponView.img_background == null){
+                ImageUtils.loadImage(couponView.imgUrl ?: "",R.drawable.placeholder_image,toolbarImage,context!!)
+            }
+            initActiveButton(couponView.title, couponView.isActivated)
         }
 
         initBackButton()
@@ -84,6 +95,14 @@ class CouponDetailFragment:BaseFragment() {
             val context: Context? = activity
             if(context is MainActivity)
                 context.addFragment(R.id.container,ConditionsFragment.newInstance())
+        }
+    }
+
+    fun initActiveButton(title:String, isActive:Boolean){
+        activatedButton.isChecked = isActive
+        activatedButton.setOnCheckedChangeListener { buttonView, isChecked ->
+            val coupon = Coupon()
+            coupon.updateCouponActivation(title,isChecked)
         }
     }
 }

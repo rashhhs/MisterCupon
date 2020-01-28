@@ -1,7 +1,7 @@
-package android.com.mistercupon.repository.model.database
+package android.com.mistercupon.repository.database
 
 import android.com.mistercupon.repository.model.data.Coupon
-import android.com.mistercupon.repository.model.database.daos.CouponDao
+import android.com.mistercupon.repository.database.daos.CouponDao
 import androidx.room.Database
 import androidx.room.RoomDatabase
 

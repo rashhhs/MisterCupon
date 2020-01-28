@@ -18,6 +18,7 @@ class CouponListViewModel : ViewModel() {
     lateinit var view: CouponViewContract
     lateinit var coupons:LiveData<PagedList<CouponView>>
     var isFirstTime: MutableLiveData<Boolean> = MutableLiveData()
+    var couponsActive: LiveData<Int> = MutableLiveData()
 
     init {
         initData()
@@ -44,6 +45,7 @@ class CouponListViewModel : ViewModel() {
             else
                 couponModel.get().mapByPage{input ->  input.map { modelToUnitView(it,false) }}.toLiveData(pageSize = 50)
         }
+        couponsActive = couponModel.getActiveCoupons()
     }
 
     fun setCountractView(view:CouponViewContract){
@@ -65,12 +67,14 @@ class CouponListViewModel : ViewModel() {
             .setDaysToExpireBackground(if(isPlaceholder)view.getBackgroundPlaceholder() else null)
             .setDaysToExpireColor(if(isPlaceholder)view.getPlaceholderTextColor() else view.getDefaultTextColor())
             .setImgUrl(value.img_url)
+            .setImageUrlBackgorund(if(isPlaceholder)view.getBackgroundPlaceholder() else null)
             .setIsActivated(value.isActivated)
             .setDiscount(value.discount)
             .setLimitationUnits(value.limitationUnits)
             .setCouponTimes(value.couponTimes)
             .setProductDescription(value.productDescription)
             .setProductCode(value.productCode)
+            .setActivatedButton(if(isPlaceholder)view.getViewVisible() else view.getViewGone())
             .build()
     }
 

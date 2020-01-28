@@ -1,6 +1,6 @@
 package android.com.mistercupon.repository
 
-import android.com.mistercupon.repository.model.database.Database
+import android.com.mistercupon.repository.database.Database
 import android.com.mistercupon.repository.remote.DownloadService
 import android.content.Context
 import io.reactivex.disposables.CompositeDisposable

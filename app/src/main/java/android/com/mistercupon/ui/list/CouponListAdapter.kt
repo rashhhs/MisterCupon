@@ -5,12 +5,14 @@ import android.com.mistercupon.R
 import android.com.mistercupon.repository.model.data.Coupon
 import android.com.mistercupon.ui.detail.CouponDetailFragment
 import android.com.mistercupon.ui.list.data.CouponView
+import android.com.mistercupon.ui.utils.ImageUtils
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.ToggleButton
 import androidx.paging.PagedListAdapter
@@ -47,6 +49,12 @@ class CouponListAdapter(val context: Context?): PagedListAdapter<CouponView,Coup
             holder.timeToExpire.text = unit?.daysToExpire
             holder.timeToExpire.background = unit?.daysToExpire_background
             holder.timeToExpire.setTextColor(unit?.daysToExpire_color ?: 0)
+            holder.image.background = unit?.img_background
+            holder.activatedContainerPlaceholder.visibility = unit?.activatedButtonActive ?: View.GONE
+            if(unit?.img_background == null){
+                ImageUtils.loadImage(unit?.imgUrl ?: "",R.drawable.placeholder_image,holder.image,context!!)
+            }
+            holder.activatedButton.isChecked = unit?.isActivated ?: false
         }
     }
 
@@ -56,10 +64,15 @@ class CouponListAdapter(val context: Context?): PagedListAdapter<CouponView,Coup
         internal var image:ImageView = item.findViewById(R.id.img_coupon)
         internal var title: TextView = item.findViewById(R.id.title_coupon)
         internal var timeToExpire: TextView = item.findViewById(R.id.time_toExpire_coupon)
+        internal var activatedContainerPlaceholder: LinearLayout = item.findViewById(R.id.placeholder_button)
         internal var activatedButton: ToggleButton = item.findViewById(R.id.isActivated_button)
 
         init {
             item.setOnClickListener(this)
+            activatedButton.setOnCheckedChangeListener { buttonView, isChecked ->
+                val coupon = Coupon()
+                coupon.updateCouponActivation(getItem(adapterPosition)?.title ?: "",isChecked)
+            }
         }
 
         override fun onClick(v: View?) {

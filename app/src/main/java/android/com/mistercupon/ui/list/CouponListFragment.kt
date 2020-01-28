@@ -1,28 +1,32 @@
 package android.com.mistercupon.ui.list
 
 import android.com.mistercupon.BaseFragment
-import android.com.mistercupon.MainActivity
-import androidx.lifecycle.ViewModelProviders
+import android.com.mistercupon.R
+import android.graphics.drawable.Drawable
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.com.mistercupon.R
-import android.com.mistercupon.ui.list.data.CouponView
-import android.graphics.drawable.Drawable
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
-import androidx.paging.PagedList
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
+import com.google.android.material.appbar.CollapsingToolbarLayout
 import kotlinx.android.synthetic.main.coupon_list_fragment.*
+
 
 class CouponListFragment : BaseFragment(),CouponViewContract {
 
     lateinit var mRecyclerView: RecyclerView
     lateinit var mTextView:TextView
+    lateinit var mAppBarLayout: AppBarLayout
+    lateinit var mCollapsingToolbar:CollapsingToolbarLayout
+
+    var couponsActive:String = "0 coupons active"
 
     companion object {
         fun newInstance() = CouponListFragment()
@@ -36,7 +40,9 @@ class CouponListFragment : BaseFragment(),CouponViewContract {
     ): View {
         val view = inflater.inflate(R.layout.coupon_list_fragment, container, false)
         mRecyclerView = view.findViewById(R.id.recyclerview)
-        mTextView = view.findViewById(R.id.textView)
+        mTextView = view.findViewById(R.id.couponsActiveTextView)
+        mAppBarLayout = view.findViewById(R.id.appBar)
+        mCollapsingToolbar = view.findViewById(R.id.collapsingToolbar)
         return view
     }
 
@@ -46,6 +52,7 @@ class CouponListFragment : BaseFragment(),CouponViewContract {
         viewModel = ViewModelProviders.of(this).get(CouponListViewModel::class.java)
         viewModel.setCountractView(this)
         initAdapter()
+        initAppBarLayout()
     }
 
     fun initAdapter(){
@@ -54,12 +61,40 @@ class CouponListFragment : BaseFragment(),CouponViewContract {
         recyclerview.layoutManager = LinearLayoutManager(context)
         recyclerview.adapter = adapter
 
-        viewModel.coupons.observe(viewLifecycleOwner, Observer { couponsList -> adapter.submitList(couponsList)})
+        viewModel.coupons.observe(viewLifecycleOwner, Observer { couponsList ->
+            adapter.submitList(couponsList)
+        })
+        viewModel.couponsActive.observe(viewLifecycleOwner, Observer { t ->
+            val activeCoupons = "$t coupons activated"
+            mTextView.text = activeCoupons
+            couponsActive = activeCoupons
+        })
+    }
+
+    fun initAppBarLayout(){
+        mAppBarLayout.addOnOffsetChangedListener(object : OnOffsetChangedListener {
+            var isShow = false
+            var scrollRange = -1
+            override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
+                if (scrollRange == -1) {
+                    scrollRange = appBarLayout.totalScrollRange
+                }
+                if (scrollRange + verticalOffset == 0) {
+                    mCollapsingToolbar.setTitle(couponsActive)
+                    mTextView.visibility = View.GONE
+                    isShow = false
+                } else if (!isShow) {
+                    mCollapsingToolbar.setTitle(getString(R.string.title_list))
+                    mTextView.visibility = View.VISIBLE
+                    isShow = true
+                }
+            }
+        })
     }
 
     override fun getBackgroundPlaceholder(): Drawable? {
         if(context == null) return null
-        return ContextCompat.getDrawable(context!!,R.drawable.rounded_thumbnail)
+        return ContextCompat.getDrawable(context!!, R.drawable.rounded_thumbnail)
     }
 
     override fun getPlaceholderTextColor(): Int {
@@ -70,5 +105,13 @@ class CouponListFragment : BaseFragment(),CouponViewContract {
     override fun getDefaultTextColor(): Int {
         if(context == null)return 0
         return mTextView.textColors.defaultColor
+    }
+
+    override fun getViewVisible(): Int {
+        return View.VISIBLE
+    }
+
+    override fun getViewGone(): Int {
+        return View.GONE
     }
 }
