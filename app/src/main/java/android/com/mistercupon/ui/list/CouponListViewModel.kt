@@ -15,10 +15,18 @@ import java.util.concurrent.TimeUnit
 
 class CouponListViewModel : ViewModel() {
 
+    enum class coupons_states {PLACEHOLDER,DEFAULT}
     lateinit var view: CouponViewContract
-    var coupons:LiveData<PagedList<CouponView>> = MutableLiveData()
-    var isFirstTime: MutableLiveData<Boolean> = MutableLiveData()
+    var coupons:LiveData<PagedList<CouponView>>
+    var isFirstTime: MutableLiveData<coupons_states> = MutableLiveData()
     var couponsActive: LiveData<Int> = MutableLiveData()
+
+    var couponInstance: Coupon = Coupon()
+
+    init {
+        coupons = setData()
+        couponsActive = getActiveCoupons()
+    }
 
     fun start(){
         initData()
@@ -26,43 +34,42 @@ class CouponListViewModel : ViewModel() {
     }
 
     fun initData(){
-        Single.just(updateFirstTime(true))
+        Single.just(updateFirstTime(coupons_states.PLACEHOLDER))
             .delay(1000, TimeUnit.MILLISECONDS)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .doAfterSuccess { updateFirstTime(false) }
+            .doAfterSuccess { updateFirstTime(coupons_states.DEFAULT) }
             .subscribe()
     }
 
-    fun setData(){
-        val couponModel = Coupon()
-        coupons = Transformations.switchMap(
+    fun setData():LiveData<PagedList<CouponView>>{
+        return Transformations.switchMap(
             isFirstTime
         ){
-            val isFirstTime = isFirstTime.value ?: false
-            if(isFirstTime)
-                getPlaceholders()
-            else
-                getData()
+            when(isFirstTime.value){
+                coupons_states.PLACEHOLDER -> getPlaceholdersData()
+                else -> getCouponsData()
+            }
         }
-        couponsActive = couponModel.getActiveCoupons()
     }
     
-    fun getPlaceholders():LiveData<PagedList<CouponView>>{
-        val couponModel = Coupon()
-        return couponModel.getPlaceholders().mapByPage{input ->  input.map { modelToUnitView(it,true) }}.toLiveData(pageSize = 50)
+    fun getPlaceholdersData():LiveData<PagedList<CouponView>>{
+        return couponInstance.getPlaceholders().mapByPage{input ->  input.map { modelToUnitView(it,true) }}.toLiveData(pageSize = 50)
     }
 
-    fun getData():LiveData<PagedList<CouponView>>{
-        val couponModel = Coupon()
-        return couponModel.get().mapByPage{input ->  input.map { modelToUnitView(it,false) }}.toLiveData(pageSize = 50)
+    fun getCouponsData():LiveData<PagedList<CouponView>>{
+        return couponInstance.get().mapByPage{input ->  input.map { modelToUnitView(it,false) }}.toLiveData(pageSize = 50)
+    }
+
+    fun getActiveCoupons():LiveData<Int>{
+        return couponInstance.getActiveCoupons()
     }
 
     fun setCountractView(view:CouponViewContract){
         this.view = view
     }
 
-    fun updateFirstTime(isFrst:Boolean){
+    fun updateFirstTime(isFrst:coupons_states){
         isFirstTime.value = isFrst
     }
 
@@ -94,5 +101,9 @@ class CouponListViewModel : ViewModel() {
 
     fun timeToExpirePlaceholder():String{
         return "4 days to finalize"
+    }
+
+    fun setCoupon(instance:Coupon){
+        couponInstance = instance
     }
 }

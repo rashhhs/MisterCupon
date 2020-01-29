@@ -19,6 +19,9 @@ interface CouponDao {
     @Query("DELETE FROM coupons")
     fun deleteCoupons()
 
+    @Query("SELECT * FROM coupons LIMIT 1")
+    fun getCoupon():Coupon
+
     @Query("SELECT * FROM coupons ORDER BY title")
     fun getCoupons():DataSource.Factory<Int,Coupon>
 
