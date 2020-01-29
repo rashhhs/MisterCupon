@@ -50,6 +50,7 @@ class CouponListFragment : BaseFragment(),CouponViewContract {
         super.onActivityCreated(savedInstanceState)
         //TODO (R): Seems with the newest version ViewModelProviders is deprecated. Search the newest approach on the future
         viewModel = ViewModelProviders.of(this).get(CouponListViewModel::class.java)
+        viewModel.start()
         viewModel.setCountractView(this)
         initAdapter()
         initAppBarLayout()
@@ -65,9 +66,7 @@ class CouponListFragment : BaseFragment(),CouponViewContract {
             adapter.submitList(couponsList)
         })
         viewModel.couponsActive.observe(viewLifecycleOwner, Observer { t ->
-            val activeCoupons = "$t coupons activated"
-            mTextView.text = activeCoupons
-            couponsActive = activeCoupons
+           updateCouponsActive(t)
         })
     }
 
@@ -90,6 +89,12 @@ class CouponListFragment : BaseFragment(),CouponViewContract {
                 }
             }
         })
+    }
+
+    fun updateCouponsActive(num_actives:Int){
+        val activeCoupons = "$num_actives coupons activated"
+        mTextView.text = activeCoupons
+        couponsActive = activeCoupons
     }
 
     override fun getBackgroundPlaceholder(): Drawable? {

@@ -84,6 +84,10 @@ class Coupon (
         return Repository.instance.database
     }
 
+    override fun isDatabaseInit():Boolean{
+        return Repository.instance.isDatabaseInit()
+    }
+
     override fun insert(values: List<Coupon>) {
         Repository.databaseCompositeDisposable.add(getDatabase()
             .couponDao.insertCoupon(values)
@@ -91,7 +95,9 @@ class Coupon (
     }
 
     override fun get(): DataSource.Factory<Int,Coupon> {
-       return getDatabase().couponDao.getCoupons()
+        if(!isDatabaseInit())
+            return getPlaceholders()
+        return getDatabase().couponDao.getCoupons()
     }
 
     override fun getPlaceholders(): DataSource.Factory<Int,Coupon>{
@@ -115,6 +121,8 @@ class Coupon (
     }
 
     fun getActiveCoupons(): LiveData<Int> {
+        if(!isDatabaseInit())
+            return MutableLiveData<Int>()
         return getDatabase().couponDao.getActivateCoupons()
     }
 }

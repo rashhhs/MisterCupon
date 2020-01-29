@@ -16,11 +16,11 @@ import java.util.concurrent.TimeUnit
 class CouponListViewModel : ViewModel() {
 
     lateinit var view: CouponViewContract
-    lateinit var coupons:LiveData<PagedList<CouponView>>
+    var coupons:LiveData<PagedList<CouponView>> = MutableLiveData()
     var isFirstTime: MutableLiveData<Boolean> = MutableLiveData()
     var couponsActive: LiveData<Int> = MutableLiveData()
 
-    init {
+    fun start(){
         initData()
         setData()
     }
@@ -41,11 +41,21 @@ class CouponListViewModel : ViewModel() {
         ){
             val isFirstTime = isFirstTime.value ?: false
             if(isFirstTime)
-                couponModel.getPlaceholders().mapByPage{input ->  input.map { modelToUnitView(it,true) }}.toLiveData(pageSize = 50)
+                getPlaceholders()
             else
-                couponModel.get().mapByPage{input ->  input.map { modelToUnitView(it,false) }}.toLiveData(pageSize = 50)
+                getData()
         }
         couponsActive = couponModel.getActiveCoupons()
+    }
+    
+    fun getPlaceholders():LiveData<PagedList<CouponView>>{
+        val couponModel = Coupon()
+        return couponModel.getPlaceholders().mapByPage{input ->  input.map { modelToUnitView(it,true) }}.toLiveData(pageSize = 50)
+    }
+
+    fun getData():LiveData<PagedList<CouponView>>{
+        val couponModel = Coupon()
+        return couponModel.get().mapByPage{input ->  input.map { modelToUnitView(it,false) }}.toLiveData(pageSize = 50)
     }
 
     fun setCountractView(view:CouponViewContract){

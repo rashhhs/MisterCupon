@@ -24,6 +24,10 @@ class Repository {
         downloadService.downloadContent()
     }
 
+    fun isDatabaseInit():Boolean{
+        return (::database.isInitialized)
+    }
+
     companion object{
         val instance = Repository()
 

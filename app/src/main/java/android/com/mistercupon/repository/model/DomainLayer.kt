@@ -5,6 +5,7 @@ import androidx.paging.DataSource
 
 interface DomainLayer<T,Z> {
     fun getDatabase():Database
+    fun isDatabaseInit():Boolean
     fun insert(values:List<T>)
     fun get(): DataSource.Factory<Int,T>
     fun getPlaceholders():DataSource.Factory<Int,T>

@@ -44,7 +44,6 @@ class CouponDetailFragment:BaseFragment() {
         mDiscountText = view.findViewById(R.id.discount_text)
         mBrandTextView = view.findViewById(R.id.brand_text)
         mProductTextView = view.findViewById(R.id.product_text)
-        mProductTextView = view.findViewById(R.id.product_text)
         mDescriptionTextView = view.findViewById(R.id.description_text)
         mTimeToExpireTextView = view.findViewById(R.id.timeToExpire_text)
         mLimitedUnitTextView = view.findViewById(R.id.limitation_title)
@@ -64,21 +63,19 @@ class CouponDetailFragment:BaseFragment() {
     }
 
     fun setContent(){
-        val couponView = arguments?.getSerializable("coupon")
+        val couponView = getCoupon()
 
-        if(couponView is CouponView){
-            mDiscountText.text = couponView.discount
-            mBrandTextView.text = couponView.brand
-            mProductTextView.text = couponView.title
-            mDescriptionTextView.text = couponView.productDescription
-            mTimeToExpireTextView.text = couponView.daysToExpire
-            mLimitedUnitTextView.text = couponView.limitationUnits
-            mProductCodeTextView.text = couponView.productCode
-            if(couponView.img_background == null){
-                ImageUtils.loadImage(couponView.imgUrl ?: "",R.drawable.placeholder_image,toolbarImage,context!!)
-            }
-            initActiveButton(couponView.title, couponView.isActivated)
+        mDiscountText.text = couponView.discount
+        mBrandTextView.text = couponView.brand
+        mProductTextView.text = couponView.title
+        mDescriptionTextView.text = couponView.productDescription
+        mTimeToExpireTextView.text = couponView.daysToExpire
+        mLimitedUnitTextView.text = couponView.limitationUnits
+        mProductCodeTextView.text = couponView.productCode
+        if(couponView.img_background == null){
+            ImageUtils.loadImage(couponView.imgUrl ?: "",R.drawable.placeholder_image,toolbarImage,context!!)
         }
+        initActiveButton(couponView.title, couponView.isActivated)
 
         initBackButton()
         initImageConditions()
@@ -104,5 +101,10 @@ class CouponDetailFragment:BaseFragment() {
             val coupon = Coupon()
             coupon.updateCouponActivation(title,isChecked)
         }
+    }
+
+    fun getCoupon():CouponView{
+        val a = arguments?.getSerializable("coupon")
+        return if(a is CouponView) a else CouponView()
     }
 }
