@@ -52,7 +52,7 @@ class CouponListAdapter(val context: Context?): PagedListAdapter<CouponView,Coup
             holder.image.background = unit?.img_background
             holder.activatedContainerPlaceholder.visibility = unit?.activatedButtonActive ?: View.GONE
             if(unit?.img_background == null){
-                ImageUtils.loadImage(unit?.imgUrl ?: "",R.drawable.placeholder_image,holder.image,context!!)
+                ImageUtils.loadImage(unit?.imgUrl ?: "",R.drawable.rounded_thumbnail,holder.image,context!!)
             }
             holder.activatedButton.isChecked = unit?.isActivated ?: false
         }
@@ -72,6 +72,12 @@ class CouponListAdapter(val context: Context?): PagedListAdapter<CouponView,Coup
             activatedButton.setOnCheckedChangeListener { buttonView, isChecked ->
                 val coupon = Coupon()
                 coupon.updateCouponActivation(getItem(adapterPosition)?.title ?: "",isChecked)
+                if(context is MainActivity){
+                    val fragment = context.supportFragmentManager.findFragmentById(R.id.container)
+                    if(fragment is CouponListFragment){
+                        if(isChecked)fragment.showBanner() else fragment.hideBanner()
+                    }
+                }
             }
         }
 

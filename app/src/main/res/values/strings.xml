@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">MisterCupon</string>
     <string name="title_list">Your coupons</string>
+    <string name="banner_left_button">Dismiss</string>
+    <string name="banner_right_button">Blame developers!</string>
+    <string name="banner_text">The activation coupon is a fake, sorry for the inconvenience</string>
 </resources>

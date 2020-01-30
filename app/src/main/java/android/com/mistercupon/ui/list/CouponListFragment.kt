@@ -2,6 +2,7 @@ package android.com.mistercupon.ui.list
 
 import android.com.mistercupon.BaseFragment
 import android.com.mistercupon.R
+import android.com.mistercupon.ui.general.Banner
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -25,6 +26,7 @@ class CouponListFragment : BaseFragment(),CouponViewContract {
     lateinit var mTextView:TextView
     lateinit var mAppBarLayout: AppBarLayout
     lateinit var mCollapsingToolbar:CollapsingToolbarLayout
+    lateinit var mBanner: Banner
 
     var couponsActive:String = "0 coupons active"
 
@@ -43,6 +45,7 @@ class CouponListFragment : BaseFragment(),CouponViewContract {
         mTextView = view.findViewById(R.id.couponsActiveTextView)
         mAppBarLayout = view.findViewById(R.id.appBar)
         mCollapsingToolbar = view.findViewById(R.id.collapsingToolbar)
+        mBanner = view.findViewById(R.id.banner)
         return view
     }
 
@@ -54,6 +57,7 @@ class CouponListFragment : BaseFragment(),CouponViewContract {
         viewModel.setCountractView(this)
         initAdapter()
         initAppBarLayout()
+        initBanner()
     }
 
     fun initAdapter(){
@@ -91,10 +95,24 @@ class CouponListFragment : BaseFragment(),CouponViewContract {
         })
     }
 
+    fun initBanner(){
+        hideBanner()
+        mBanner.setLeftButtonAction{mBanner.dismiss()}
+        mBanner.setRightButtonAction { mBanner.dismiss() }
+    }
+
     fun updateCouponsActive(num_actives:Int){
         val activeCoupons = "$num_actives coupons activated"
         mTextView.text = activeCoupons
         couponsActive = activeCoupons
+    }
+
+    fun showBanner(){
+        mBanner.show()
+    }
+
+    fun hideBanner(){
+        mBanner.dismiss()
     }
 
     override fun getBackgroundPlaceholder(): Drawable? {

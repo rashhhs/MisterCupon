@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ad_view"
+    android:layout_width="match_parent"
+    android:layout_height="225dp"
+    android:background="@color/design_default_color_background">
+
+    <TextView
+        android:id="@+id/contentTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:alpha="0.8"
+        android:letterSpacing="0.02"
+        android:lineSpacingExtra="7sp"
+        android:textSize="14sp"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toTopOf="@+id/rightButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        tools:text="@string/banner_text" />
+
+    <Button
+        android:id="@+id/leftButton"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:textColor="@color/design_default_color_on_secondary"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/rightButton"
+        app:layout_constraintEnd_toStartOf="@+id/rightButton"
+        app:layout_constraintTop_toTopOf="@+id/rightButton"
+        tools:text="@string/banner_left_button" />
+
+    <Button
+        android:id="@+id/rightButton"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="9dp"
+        android:textColor="@color/design_default_color_on_secondary"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="@string/banner_right_button" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

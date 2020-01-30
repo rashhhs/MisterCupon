@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.com.mistercupon.ui.general.Banner
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/banner"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ccc"
+    android:elevation="10dp"
+    app:contentText="@string/banner_text"
+    app:leftButtonText="@string/banner_left_button"
+    app:rightButtonText="@string/banner_right_button"
+    />

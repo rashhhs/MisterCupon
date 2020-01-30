@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.paging.DataSource
 import androidx.paging.PagedList
 import com.nhaarman.mockitokotlin2.*
+import junit.framework.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -43,30 +44,33 @@ class CouponListViewModelTest {
     }
 
     /*
-        Test coupons list getting correctly content (placeholders or real content if its ready)
+        Test that depends what the screen wants to show. The viewModel ask for a different DataSource.Factory to the model
      */
     @Test
     fun couponListStates(){
         val spy = spy(viewModel)
         val source = CouponListDataSourceFactory()
-        var a = 0
-
-        //whenever(spy.modelToUnitView(Coupon(eq("")), any())).thenReturn(CouponView.Builder().build())
-        //whenever(spy.view).thenReturn(view)
-        //whenever(viewModel.getPlaceholdersData()).thenReturn(liveData)
+        var placeholderCounts = 0
+        var defaultCounts = 0
 
         whenever(spy.couponInstance).thenReturn(couponModel)
-        whenever(spy.couponInstance.getPlaceholders()).thenReturn(source)
-        whenever(spy.getPlaceholdersData()).thenReturn(liveData)
+        whenever(spy.couponInstance.getPlaceholders()).doAnswer {
+            placeholderCounts++
+            source
+        }
+        whenever(spy.couponInstance.get()).doAnswer {
+            defaultCounts++
+            source
+        }
 
         spy.coupons.observeForever(observer)
         spy.isFirstTime.observeForever(observer1)
 
         spy.updateFirstTime(CouponListViewModel.coupons_states.PLACEHOLDER)
-        //spy.isFirstTime.value = true
-        //spy.isFirstTime.value = false
+        spy.updateFirstTime(CouponListViewModel.coupons_states.DEFAULT)
+        spy.updateFirstTime(CouponListViewModel.coupons_states.DEFAULT)
 
-        verify(spy, times(3)).getPlaceholdersData()
-        verify(spy,times(1)).getCouponsData()
+        assertEquals(1,placeholderCounts)
+        assertEquals(2,defaultCounts)
     }
 }

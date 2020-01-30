@@ -11,6 +11,7 @@ import org.junit.Before
 import org.junit.Test
 import java.io.IOException
 
+//TODO (R): Improves the amount of test cases
 class CouponDatabaseTest {
     private lateinit var couponDao: CouponDao
     private lateinit var db: AppDatabase
